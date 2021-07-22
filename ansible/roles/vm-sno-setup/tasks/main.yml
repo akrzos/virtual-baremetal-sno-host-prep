@@ -2,7 +2,7 @@
 
 - name: set mac address and host name of the vm
   set_fact:
-    vm_mac_address: "{{ vm_mac_address_prefix }}:{{ vm_mac_host_index }}:{{ vm_mac_vm_index }}"
+    vm_mac_address: "{{ vm_mac_address_prefix }}:{{ vm_mac_host_index[0:2] }}:{{ vm_mac_host_index[2:4] }}:{{ vm_mac_vm_index[0:2] }}:{{ vm_mac_vm_index[2:4] }}:{{ vm_mac_vm_index[4:6] }}"
     vm_name: "vm-{{ vm_mac_host_index }}-{{ vm_mac_vm_index }}"
 
 - name: verify all variables

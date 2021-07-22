@@ -1,15 +1,15 @@
 - name: setup variables
   set_fact:
     vm_vnc_port: "{{5900+ (vm_index |int ) }}"
-    vm_mac_vm_index: "{{'%02x' % ( vm_index | int) }}"
-    vm_mac_host_index: "{{'%02x' % (hostvars[inventory_hostname].offset | int) }}"
+    vm_mac_host_index: "{{('%04x' % (hostvars[inventory_hostname].offset | int)) }}"
+    vm_mac_vm_index: "{{('%06x' % ( vm_index | int)) }}"
     vmhost_name: "{{inventory_hostname}}"
 
 - name: set vm_name
   set_fact:
     vm_name: "vm-{{ vm_mac_host_index }}-{{ vm_mac_vm_index }}"
 
-- name: select disk folder base disk2 or sda 
+- name: select disk folder base disk2 or sda
   set_fact:
     sno_vm_disk_dir: "{% if ( (hostvars[inventory_hostname].enable_disk2 == 'true' )  and use_disk2 ) %}{{disk2_mount_path}}/libvirt/images{% else %}/var/lib/libvirt/images{% endif %}"
 
@@ -18,7 +18,7 @@
     virsh destroy "{{vm_name}}"
   register: result
   ignore_errors: yes
-  
+
 - name: undefine vm on vm host
   shell: |
     virsh undefine --nvram "{{vm_name}}"
@@ -30,5 +30,3 @@
   file:
     state: absent
     path: "{{sno_vm_disk_dir}}/{{vm_name}}.qcow2"
-
-  

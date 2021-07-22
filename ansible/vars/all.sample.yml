@@ -52,8 +52,9 @@ bmc_username_base64: "{{ 'redhat' | b64encode }}"
 # patch will be mounted on vm host
 disk2_mount_path: /mnt/disk2
 
-# The mac address prefix of the
-vm_mac_address_prefix: "52:54:00:76"
+# The mac address prefix (1 octet)
+# Mac address format: "XX:YY:YY:ZZ:ZZ:ZZ" XX = prefix, YY = host prefix, ZZ = VM index
+vm_mac_address_prefix: "52"
 
 # vm resource settings
 # make sure they are not exceeding the vmhost's capacity
@@ -62,3 +63,5 @@ vm_cpu: 6
 vm_memory: 32
 # unit G
 vm_disk: 120
+
+vm_index_offset: 0

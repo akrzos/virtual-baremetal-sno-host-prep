@@ -1,9 +1,9 @@
 - name: set use_disk2=false
-  set_fact: 
+  set_fact:
     use_disk2: false
 
 - name: set vm_index
   set_fact:
-    vm_index: "{{item}}"
+    vm_index: "{{item|int + vm_index_offset|int}}"
 
 - include_tasks: cleanup-one-vm.yml

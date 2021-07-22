@@ -16,7 +16,7 @@
     line: "cluster_name,domain_name,mac_addr,ip,prefix,gateway,machine_cidr,dns_resolver,bmc_addr,bmc_username,bmc_password"
 - name: set a counter
   set_fact:
-    line_counter=0
+    line_counter={{ (vm_index_offset|int * (groups['vmhosts'] | length))  }}
 - name: create inventory
   include_tasks: append-one-vmhost.yml
   loop: "{{ groups['vmhosts'] }}"
